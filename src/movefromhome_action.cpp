@@ -19,24 +19,24 @@ namespace KCL_rosplan {
 	erl2::PlanningGoal goal;
 	ac.waitForServer();
 	if(msg->parameters[1].value == "wp0"){
-		goal.target_pose.pose.position.x = -2.5;
+		goal.target_pose.pose.position.x = -2.2;
 		goal.target_pose.pose.position.y = 0.0;
-		goal.target_pose.pose.orientation.w = 0.0;
+		goal.target_pose.pose.orientation.w = 3.14;
 	}
 	else if (msg->parameters[1].value == "wp1"){
-		goal.target_pose.pose.position.x = 2.5;
+		goal.target_pose.pose.position.x = 2.2;
 		goal.target_pose.pose.position.y = 0.0;
 		goal.target_pose.pose.orientation.w = 0.0;
 	}
 	else if (msg->parameters[1].value == "wp2"){
 		goal.target_pose.pose.position.x = 0.0;
-		goal.target_pose.pose.position.y = -2.5;
-		goal.target_pose.pose.orientation.w = 0.0;
+		goal.target_pose.pose.position.y = -2.2;
+		goal.target_pose.pose.orientation.w = -3.14/2;
 	}
 	else if (msg->parameters[1].value == "wp3"){
 		goal.target_pose.pose.position.x = 0.0;
-		goal.target_pose.pose.position.y = 2.5;
-		goal.target_pose.pose.orientation.w = 0.0;
+		goal.target_pose.pose.position.y = 2.2;
+		goal.target_pose.pose.orientation.w = 3.14/2;
 	}
 	ac.sendGoal(goal);
 	ac.waitForResult();

@@ -13,14 +13,11 @@
 #include <moveit/robot_model/robot_model.h>
 #include <moveit/robot_state/robot_state.h>
 
-
 namespace KCL_rosplan {
 	float z0;
 	float z1;
 	float z2;
 	float z3;
-	
-	
 	
 	TakeHintInterface::TakeHintInterface(ros::NodeHandle &nh) {
 	// here the initialization
@@ -32,75 +29,96 @@ namespace KCL_rosplan {
 	std::cout << "TAKING HINT: from " << msg->parameters[0].value << std::endl;
 	
 		
-
+	moveit::planning_interface::MoveGroupInterface group("arm");
+		group.setEndEffectorLink("cluedo_link");
+		group.setPoseReferenceFrame("base_link");
+		group.setPlannerId("RRTstar");
+		group.setNumPlanningAttempts(10);
+		group.setPlanningTime(10.0);
+		group.allowReplanning(true);
+		group.setGoalJointTolerance(0.0001);
+		group.setGoalPositionTolerance(0.0001);
+		group.setGoalOrientationTolerance(0.001);
+		
 	if(msg->parameters[0].value == "wp0"){
 		printf("entrato in wp0\n");
 		
-		robot_model_loader::RobotModelLoader robot_model_loader("robot_description");
-	  	const moveit::core::RobotModelPtr& kinematic_model = robot_model_loader.getModel();
-		ROS_INFO("Model frame: %s", kinematic_model->getModelFrame().c_str());
-	  	
-	  	
-		moveit::core::RobotStatePtr kinematic_state(new moveit::core::RobotState(kinematic_model));
-	  	kinematic_state->setToDefaultValues();
-	 	const moveit::core::JointModelGroup* joint_model_group = kinematic_model->getJointModelGroup("arm");
-	 	moveit::planning_interface::MoveGroupInterface group("arm");
-	 	const std::vector<std::string>& joint_names = joint_model_group->getVariableNames();
-  
-  
-		geometry_msgs::Pose pose1;
-		//moveit::planning_interface::MoveGroupInterface group("arm");
-	
-  		pose1.orientation.w = 0.00;
-  		pose1.orientation.x = 0.00;
-		pose1.orientation.y = 0.00;
-		pose1.orientation.z = 0.00;
-		pose1.position.x =  2.50;
-		pose1.position.y =  -2.00;
-		pose1.position.z =  1.25;
-		std::cout << "HINT HEIGHT Z0: "<< pose1.position.z << std::endl;
-		
-  		group.setStartStateToCurrentState();
-		group.setApproximateJointValueTarget(pose1, "cluedo_link");
-		std::vector<double> joint_values;
-		double timeout = 0.1;
-		bool found_ik = kinematic_state->setFromIK(joint_model_group, pose1, timeout);
-		
-		//if (found_ik)
-	 	//{
-			kinematic_state->copyJointGroupPositions(joint_model_group, joint_values);
-			//for (std::size_t i = 0; i < joint_names.size(); ++i)
-			//{
-			  //ROS_INFO("Joint %s: %f", joint_names[i].c_str(), joint_values[i]);
-			//}
-		 //}
-		 //else
-	    //{
-			//ROS_INFO("Did not find IK solution");
-	    //}
-		  
-		group.setJointValueTarget(joint_values);
-		group.setStartStateToCurrentState();
-		group.setGoalOrientationTolerance(0.01);
-		group.setGoalPositionTolerance(0.01);
-		 
-		moveit::planning_interface::MoveGroupInterface::Plan my_plan;
-		group.plan(my_plan); 
-		group.execute(my_plan);
+		if (z0 == 1.25){
+			group.setNamedTarget("1_25_maybe");
+			std::cout << "Z0: " << z0 << std::endl;
+			}
+		else if (z0 == 0.75){
+			group.setNamedTarget("0_75_maybe");
+			std::cout << "Z0: " << z0 << std::endl;
+			}
+		else{
+			printf("Z0 NON FUNZIONA\n");
+			group.setNamedTarget("zero");
+			std::cout << "Z0: " << z0 << std::endl;
+			}
+		group.move(); 
 	}
 	
-	else if (msg->parameters[1].value == "wp1"){
+	else if (msg->parameters[0].value == "wp1"){
+		printf("entrato in wp1\n");
 		
+		if (z1 == 1.25){
+			group.setNamedTarget("1_25_maybe");
+			std::cout << "Z1: " << z1 << std::endl;
+			}
+		else if (z1 == 0.75){
+			group.setNamedTarget("0_75_maybe");
+			std::cout << "Z1: " << z1 << std::endl;
+			}
+		else{
+			printf("Z1 NON FUNZIONA\n");
+			group.setNamedTarget("zero");
+			std::cout << "Z1: " << z1 << std::endl;
+			}
+		group.move(); 
 	}
-	else if (msg->parameters[1].value == "wp2"){
+	else if (msg->parameters[0].value == "wp2"){
+		printf("entrato in wp2\n");
 		
+		if (z2 == 1.25){
+			group.setNamedTarget("1_25_maybe");
+			std::cout << "Z2: " << z2 << std::endl;
+			}
+		else if (z2 == 0.75){
+			group.setNamedTarget("0_75_maybe");
+			std::cout << "Z2: " << z2 << std::endl;
+			}
+		else{
+			printf("Z2 NON FUNZIONA\n");
+			group.setNamedTarget("zero");
+			std::cout << "Z2: " << z2 << std::endl;
+			}
+		group.move(); 
 	}
-	else if (msg->parameters[1].value == "wp3"){
-
+	else if (msg->parameters[0].value == "wp3"){
+		printf("entrato in wp3\n");
+		
+		if (z3 == 1.25){
+			group.setNamedTarget("1_25_maybe");
+			std::cout << "Z3: " << z3 << std::endl;
+			}
+		else if (z3 == 0.75){
+			group.setNamedTarget("0_75_maybe");
+			std::cout << "Z3: " << z3 << std::endl;
+			}
+		else{
+			printf("Z3 NON FUNZIONA\n");
+			group.setNamedTarget("zero");
+			std::cout << "Z3: " << z3 << std::endl;
+			}
+		group.move();
 	}
 	//ac.sendGoal(goal);
 	//ac.waitForResult();
-
+ 	else {
+ 		std::cout<< "SOMETHING WENT WRONG" << std::endl;
+ 	}
+ 	
 	ROS_INFO("Action (%s) performed: completed!", msg->name.c_str());
 	return true;
 	}
@@ -109,19 +127,19 @@ namespace KCL_rosplan {
 	void marker_position_callback(const visualization_msgs::MarkerArray::ConstPtr& msg) {
 	
 	//int id0 = msg->markers[0].id;
-	float z0 = msg->markers[0].pose.position.z;
+	z0 = msg->markers[0].pose.position.z;
 	//printf("Marker %d: x: %f, y: %f, z: %f\n", id0,x0,y0,z0);
 	
 	//int id1 = msg->markers[1].id;
-	float z1 = msg->markers[1].pose.position.z;
+	z1 = msg->markers[1].pose.position.z;
 	//printf("Marker %d: x: %f, y: %f, z: %f\n", id1,x1,y1,z1);
 	
 	//int id2 = msg->markers[2].id;
-	float z2 = msg->markers[2].pose.position.z;
+	z2 = msg->markers[2].pose.position.z;
 	//printf("Marker %d: x: %f, y: %f, z: %f\n", id2,x2,y2,z2);
 	
 	//int id3 = msg->markers[3].id;
-	float z3 = msg->markers[3].pose.position.z;
+	z3 = msg->markers[3].pose.position.z;
 	//printf("Marker %d: x: %f, y: %f, z: %f\n", id3,x3,y3,z3);
 	
 	//std::cout << "id: " << id << std::endl;
