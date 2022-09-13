@@ -13,7 +13,6 @@ class MovingActionInterface: public RPActionInterface
 			MovingActionInterface(ros::NodeHandle &nh);
 			/* listen to and process action_dispatch topic */
 			bool concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg);
-			void marker_position_callback(const visualization_msgs::MarkerArray::ConstPtr& msg);
 	};
 }
 

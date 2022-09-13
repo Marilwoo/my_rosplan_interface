@@ -55,41 +55,12 @@ namespace KCL_rosplan {
 	ROS_INFO("Action (%s) performed: completed!", msg->name.c_str());
 	return true;
 	}
-	
-	void marker_position_callback(const visualization_msgs::MarkerArray::ConstPtr& msg) {
-	
-	int id0 = msg->markers[0].id;
-	 x0 = msg->markers[0].pose.position.x;
-	 y0 = msg->markers[0].pose.position.y;
-	//printf("Marker %d: x: %f, y: %f, z: %f\n", id0,x0,y0,z0);
-	
-	int id1 = msg->markers[1].id;
-	 x1 = msg->markers[1].pose.position.x;
-	 y1 = msg->markers[1].pose.position.y;
-	//printf("Marker %d: x: %f, y: %f, z: %f\n", id1,x1,y1,z1);
-	
-	int id2 = msg->markers[2].id;
-	 x2 = msg->markers[2].pose.position.x;
-	 y2 = msg->markers[2].pose.position.y;
-	//printf("Marker %d: x: %f, y: %f, z: %f\n", id2,x2,y2,z2);
-	
-	int id3 = msg->markers[3].id;
-	 x3 = msg->markers[3].pose.position.x;
-	 y3 = msg->markers[3].pose.position.y;
-	//printf("Marker %d: x: %f, y: %f, z: %f\n", id3,x3,y3,z3);
-	
-	//std::cout << "id: " << id << std::endl;
-	
-	//std::cout<< "size(markers): " << msg->markers.size() << std::endl;
-	//std::cout << "qua" << std::endl;	
-	}
 }
 
 int main(int argc, char **argv) {
 
 	ros::init(argc, argv, "movingaction", ros::init_options::AnonymousName);
 	ros::NodeHandle nh("~");
-	ros::Subscriber sub = nh.subscribe("/visualization_marker", 10, KCL_rosplan::marker_position_callback);
 	KCL_rosplan::MovingActionInterface my_aci(nh);
 	my_aci.runActionInterface();
 	
