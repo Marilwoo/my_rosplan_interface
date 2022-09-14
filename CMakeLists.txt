@@ -140,6 +140,7 @@ include_directories(
  add_executable(goinghomeaction src/goinghome_action.cpp)
  add_executable(movefromhomeaction src/movefromhome_action.cpp)
  add_executable(takehintaction src/takehint_action.cpp)
+ add_executable(checkhintaction src/checkhint_action.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -153,6 +154,7 @@ include_directories(
  add_dependencies(goinghomeaction ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
  add_dependencies(movefromhomeaction ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
  add_dependencies(takehintaction ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+ add_dependencies(checkhintaction ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 
 ## Specify libraries to link a library or executable target against
@@ -166,6 +168,9 @@ include_directories(
    ${catkin_LIBRARIES} rosplan_action_interface
  )
  target_link_libraries(takehintaction
+   ${catkin_LIBRARIES} rosplan_action_interface
+ )
+target_link_libraries(checkhintaction
    ${catkin_LIBRARIES} rosplan_action_interface
  )
 
