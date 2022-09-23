@@ -19,7 +19,7 @@ class TakeHintInterface: public RPActionInterface
 			bool concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg);
 			void marker_position_callback(const visualization_msgs::MarkerArray::ConstPtr& msg);
 			void oracle_hint_callback(const erl2::ErlOracle::ConstPtr& msg);
-			void load_ontology (int ID, std::string key, std::string value);
+			void load_ontology (std::string ID, std::string key, std::string value);
 	};
 }
 

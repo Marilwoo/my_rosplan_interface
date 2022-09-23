@@ -23,7 +23,7 @@ namespace KCL_rosplan {
 	
 		goal.target_pose.pose.position.x = 0.0;
 		goal.target_pose.pose.position.y = 0.0;
-		goal.target_pose.pose.orientation.w = 0.0;
+		goal.target_pose.pose.orientation.w = -3.14/2;
 	
 	ac.sendGoal(goal);
 	ac.waitForResult();
