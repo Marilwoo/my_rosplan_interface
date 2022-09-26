@@ -16,8 +16,6 @@
 #include <moveit/robot_model/robot_model.h>
 #include <moveit/robot_state/robot_state.h>
 
-//Ontology
-#include <erl2/onto.h>
 #include <erl2/hints.h>
 
 ros::Publisher pub;
@@ -43,15 +41,11 @@ namespace KCL_rosplan {
 	std::vector<std::string> hint_3;
 	std::vector<std::string> hint_4;
 	std::vector<std::string> hint_5;
-	/*
-	std::string hint_0[3] = {""};
-	std::string hint_1[3] = {""};
-	std::string hint_2[3] = {""};
-	std::string hint_3[3] = {""};
-	std::string hint_4[3] = {""};
-	std::string hint_5[3] = {""};
-	*/
-	void load_ontology (std::string ID, std::string key, std::string class_1);
+	
+	bool known_position_wp0 = false;
+	bool known_position_wp1 = false;
+	bool known_position_wp2 = false;
+	bool known_position_wp3 = false;
 	
 	TakeHintInterface::TakeHintInterface(ros::NodeHandle &nh) {
 	// here the initialization
@@ -59,9 +53,7 @@ namespace KCL_rosplan {
 	
 	bool TakeHintInterface::concreteCallback(const rosplan_dispatch_msgs::ActionDispatch::ConstPtr& msg) {
 		// here the implementation of the action
-		
 		std::cout << "TAKING HINT: from " << msg->parameters[0].value << std::endl;
-		
 			
 		moveit::planning_interface::MoveGroupInterface group("arm");
 			group.setEndEffectorLink("cluedo_link");
@@ -74,6 +66,104 @@ namespace KCL_rosplan {
 			group.setGoalPositionTolerance(0.0001);
 			group.setGoalOrientationTolerance(0.001);
 			
+			if (msg->parameters[0].value == "wp0" && known_position_wp0 == false){
+				group.setNamedTarget("1_25_maybe");
+				group.move();
+				
+				group.setNamedTarget("0_75_maybe");
+				group.move();
+				
+				group.setNamedTarget("zero");
+				group.move();
+
+				known_position_wp0 = true;
+			}
+			
+			else if (msg->parameters[0].value == "wp0" && known_position_wp0 == true){
+				if (z0 == 1.25){
+					group.setNamedTarget("1_25_maybe");
+				}
+				else if (z0 == 0.75){
+					group.setNamedTarget("0_75_maybe");
+				}
+				group.move();
+			}
+			
+			else if (msg->parameters[0].value == "wp1" && known_position_wp1 == false){
+				group.setNamedTarget("1_25_maybe");
+				group.move();
+				
+				group.setNamedTarget("0_75_maybe");
+				group.move();
+				
+				group.setNamedTarget("zero");
+				group.move();
+
+				known_position_wp1 = true;
+			}
+			
+			else if (msg->parameters[0].value == "wp1" && known_position_wp1 == true){
+				if (z1 == 1.25){
+					group.setNamedTarget("1_25_maybe");
+				}
+				else if (z1 == 0.75){
+					group.setNamedTarget("0_75_maybe");
+				}
+				group.move();
+			}
+			
+			else if (msg->parameters[0].value == "wp2" && known_position_wp2 == false){
+				group.setNamedTarget("1_25_maybe");
+				group.move();
+				
+				group.setNamedTarget("0_75_maybe");
+				group.move();
+				
+				group.setNamedTarget("zero");
+				group.move();
+
+				known_position_wp2 = true;
+			}
+			
+			else if (msg->parameters[0].value == "wp2" && known_position_wp2 == true){
+				if (z2 == 1.25){
+					group.setNamedTarget("1_25_maybe");
+				}
+				else if (z2 == 0.75){
+					group.setNamedTarget("0_75_maybe");
+				}
+				group.move();
+			}
+			
+			else if (msg->parameters[0].value == "wp3" && known_position_wp3 == false){
+				group.setNamedTarget("1_25_maybe");
+				group.move();
+				
+				group.setNamedTarget("0_75_maybe");
+				group.move();
+				
+				group.setNamedTarget("zero");
+				group.move();
+
+
+				known_position_wp3 = true;
+			}
+			
+			else if (msg->parameters[0].value == "wp3" && known_position_wp3 == true){
+				if (z3 == 1.25){
+					group.setNamedTarget("1_25_maybe");
+				}
+				else if (z3 == 0.75){
+					group.setNamedTarget("0_75_maybe");
+				}
+				group.move();
+			}
+			
+			
+			
+			
+			
+		/*	
 		if(msg->parameters[0].value == "wp0"){
 			if (z0 == 1.25){
 				group.setNamedTarget("1_25_maybe");
@@ -127,8 +217,7 @@ namespace KCL_rosplan {
 				}
 			group.move();
 		}
-		//ac.sendGoal(goal);
-		//ac.waitForResult();
+		*/
 	 	else {
 	 		std::cout<< "SOMETHING WENT WRONG" << std::endl;
 	 	}
@@ -137,36 +226,15 @@ namespace KCL_rosplan {
 		return true;
 	}
 	
-	
 	void marker_position_callback(const visualization_msgs::MarkerArray::ConstPtr& msg) {
-	
-		//int id0 = msg->markers[0].id;
 		z0 = msg->markers[0].pose.position.z;
-		//printf("Marker %d: x: %f, y: %f, z: %f\n", id0,x0,y0,z0);
-		
-		//int id1 = msg->markers[1].id;
 		z1 = msg->markers[1].pose.position.z;
-		//printf("Marker %d: x: %f, y: %f, z: %f\n", id1,x1,y1,z1);
-		
-		//int id2 = msg->markers[2].id;
 		z2 = msg->markers[2].pose.position.z;
-		//printf("Marker %d: x: %f, y: %f, z: %f\n", id2,x2,y2,z2);
-		
-		//int id3 = msg->markers[3].id;
 		z3 = msg->markers[3].pose.position.z;
-		//printf("Marker %d: x: %f, y: %f, z: %f\n", id3,x3,y3,z3);
-		
-		//std::cout << "id: " << id << std::endl;
-		
-		//std::cout<< "size(markers): " << msg->markers.size() << std::endl;
 	}
 	
 	void oracle_hint_callback(const erl2::ErlOracle::ConstPtr& msg) {
-		
-		//Prima di prendere l'indizio nuovo controllo che non sia già di dimensione 3.
-		// Se ha dimensione 3 vuol dire che non è consistente (perchè lo ho controllato alla fine del
-		//"ciclo" precedente, oppure che sta per diventare di dimensione 4. Comunque non va bene.
-		
+	
 		if (hint_0.size() == 4){
 			std::cout << "Clearing hint_0" << std::endl;
 			hint_0.clear();
@@ -220,7 +288,6 @@ namespace KCL_rosplan {
 					if (present == false) {
 						hint_0.push_back(new_hint);
 						std::cout << "ID_str: " << ID_str << std::endl;
-						load_ontology(ID_str, key, class_1);
 					}
 					else{
 						std::cout << "Hint already present in hypothesis" << std::endl;
@@ -242,7 +309,6 @@ namespace KCL_rosplan {
 					if (present == false) { 
 						hint_1.push_back(new_hint);
 						std::cout << "ID_str: " << ID_str << std::endl;
-						load_ontology(ID_str, key, class_1);
 					}
 					else{
 						std::cout << "Hint already present in hypothesis" << std::endl;
@@ -264,7 +330,6 @@ namespace KCL_rosplan {
 					if (present == false) { 
 						hint_2.push_back(new_hint);
 						std::cout << "ID_str: " << ID_str << std::endl;
-						load_ontology(ID_str, key, class_1);
 					}
 					else{
 						std::cout << "Hint already present in hypothesis" << std::endl;
@@ -286,7 +351,6 @@ namespace KCL_rosplan {
 					if (present == false) { 
 						hint_3.push_back(new_hint);
 						std::cout << "ID_str: " << ID_str << std::endl;
-						load_ontology(ID_str, key, class_1);
 					}
 					else{
 						std::cout << "Hint already present in hypothesis" << std::endl;
@@ -308,7 +372,6 @@ namespace KCL_rosplan {
 					if (present == false) { 
 						hint_4.push_back(new_hint);
 						std::cout << "ID_str: " << ID_str << std::endl;
-						load_ontology(ID_str, key, class_1);
 					}
 					else{
 						std::cout << "Hint already present in hypothesis" << std::endl;
@@ -330,7 +393,6 @@ namespace KCL_rosplan {
 					if (present == false) { 
 						hint_5.push_back(new_hint);
 						std::cout << "ID_str: " << ID_str << std::endl;
-						load_ontology(ID_str, key, class_1);
 					}
 					else{
 						std::cout << "Hint already present in hypothesis" << std::endl;
@@ -352,14 +414,6 @@ namespace KCL_rosplan {
 				hint_msg.hint_5 = hint_5;
 				
 				hints_pub.publish(hint_msg);
-				/*
-				std::cout << "hint_0 :" << hint_0[0] << " " << hint_0[1] << " " << hint_0[2] << std::endl;
-				std::cout << "hint_1 :" << hint_1[0] << " " << hint_1[1] << " " << hint_1[2] << std::endl;
-				std::cout << "hint_2 :" << hint_2[0] << " " << hint_2[1] << " " << hint_2[2] << std::endl;
-				std::cout << "hint_3 :" << hint_3[0] << " " << hint_3[1] << " " << hint_3[2] << std::endl;
-				std::cout << "hint_4 :" << hint_4[0] << " " << hint_4[1] << " " << hint_4[2] << std::endl;
-				std::cout << "hint_5 :" << hint_5[0] << " " << hint_5[1] << " " << hint_5[2] << std::endl;
-				*/
 			}
 			else {
 				std::cout<< "Key error" << std::endl;
@@ -370,31 +424,6 @@ namespace KCL_rosplan {
 			std::cout<< "Value error" << std::endl;
 		}
 	}
-	
-	void load_ontology (std::string ID_str, std::string key, std::string class_1){
-		erl2::onto onto_msg;
-		onto_msg.class_1 = class_1;
-		onto_msg.ID = ID_str;
-		std::cout<< "LOAD ONTOLOGY ID: "<< ID_str << " class_1: " << class_1 << std::endl;
-		//std::cout <<"ONTOLOGY ID: " << ID << std::endl;
-		
-		if (key == "who"){
-			onto_msg.to_do = 1;
-			pub.publish(onto_msg);
-		}
-		else if (key == "what"){
-			onto_msg.to_do = 2;
-			pub.publish(onto_msg);
-		}
-		else if (key == "where"){
-			onto_msg.to_do = 3;
-			pub.publish(onto_msg);
-		}
-		else {
-			std::cout<< "Key error" << std::endl;
-		}
-	}
-	
 }
 
 int main(int argc, char **argv) {
@@ -406,9 +435,6 @@ int main(int argc, char **argv) {
 	ros::Subscriber hint_sub = nh1.subscribe("/oracle_hint", 10, KCL_rosplan::oracle_hint_callback);
 	
 	hints_pub = nh1.advertise<erl2::hints>("/hint_list", 0);
-	
-	//Ontology
-	pub = nh1.advertise<erl2::onto>("/ontology", 0);
 	
 	KCL_rosplan::TakeHintInterface my_aci(nh);
 	my_aci.runActionInterface();
