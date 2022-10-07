@@ -136,8 +136,8 @@ namespace KCL_rosplan {
 			//Checking if it is consistent
 			if (key != key2 && key2 != key3 && key != key3){
 				std::cout << '\n'<< '\n';
-				std::cout << "hypothesis consistent: " << hint << ", "<< hint2 << ", "<< hint3 << std::endl;
-				std::cout << "checking if it is the winning one" << std::endl;
+				std::cout << "Hypothesis consistent: " << hint << ", "<< hint2 << ", "<< hint3 << std::endl;
+				std::cout << "Checking if it is the winning one" << std::endl;
 				std::cout << '\n'<< '\n';
 				//Checking if it is the winning one
 				KCL_rosplan::check_winning("0");
@@ -160,8 +160,8 @@ namespace KCL_rosplan {
 			
 			if (key != key2 && key2 != key3 && key != key3){
 				std::cout << '\n'<< '\n';
-				std::cout << "hypothesis consistent: " << hint << ", "<< hint2 << ", "<< hint3 << std::endl;
-				std::cout << "checking if it is the winning one" << std::endl;
+				std::cout << "Hypothesis consistent: " << hint << ", "<< hint2 << ", "<< hint3 << std::endl;
+				std::cout << "Checking if it is the winning one" << std::endl;
 				std::cout << '\n'<< '\n';
 				KCL_rosplan::check_winning("1");
 			}
@@ -183,8 +183,8 @@ namespace KCL_rosplan {
 			
 			if (key != key2 && key2 != key3 && key != key3){
 				std::cout << '\n'<< '\n';
-				std::cout << "hypothesis consistent: " << hint << ", "<< hint2 << ", "<< hint3 << std::endl;
-				std::cout << "checking if it is the winning one" << std::endl;
+				std::cout << "Hypothesis consistent: " << hint << ", "<< hint2 << ", "<< hint3 << std::endl;
+				std::cout << "Checking if it is the winning one" << std::endl;
 				std::cout << '\n'<< '\n';
 				KCL_rosplan::check_winning("2");
 			}
@@ -206,8 +206,8 @@ namespace KCL_rosplan {
 			
 			if (key != key2 && key2 != key3 && key != key3){
 				std::cout << '\n'<< '\n';
-				std::cout << "hypothesis consistent: " << hint << ", "<< hint2 << ", "<< hint3 << std::endl;
-				std::cout << "checking if it is the winning one" << std::endl;
+				std::cout << "Hypothesis consistent: " << hint << ", "<< hint2 << ", "<< hint3 << std::endl;
+				std::cout << "Checking if it is the winning one" << std::endl;
 				std::cout << '\n'<< '\n';
 				KCL_rosplan::check_winning("3");
 			}
@@ -229,8 +229,8 @@ namespace KCL_rosplan {
 			
 			if (key != key2 && key2 != key3 && key != key3){
 				std::cout << '\n'<< '\n';
-				std::cout << "hypothesis consistent: " << hint << ", "<< hint2 << ", "<< hint3 << std::endl;
-				std::cout << "checking if it is the winning one" << std::endl;
+				std::cout << "Hypothesis consistent: " << hint << ", "<< hint2 << ", "<< hint3 << std::endl;
+				std::cout << "Checking if it is the winning one" << std::endl;
 				std::cout << '\n'<< '\n';
 				KCL_rosplan::check_winning("4");
 			}
@@ -252,11 +252,18 @@ namespace KCL_rosplan {
 			
 			if (key != key2 && key2 != key3 && key != key3){
 				std::cout << '\n'<< '\n';
-				std::cout << "hypothesis consistent: " << hint << ", "<< hint2 << ", "<< hint3 << std::endl;
-				std::cout << "checking if it is the winning one" << std::endl;
+				std::cout << "Hypothesis consistent: " << hint << ", "<< hint2 << ", "<< hint3 << std::endl;
+				std::cout << "Checking if it is the winning one" << std::endl;
 				std::cout << '\n'<< '\n';
 				KCL_rosplan::check_winning("5");
 			}
+		}
+		
+		//No complete hypotheses
+		if(hint_0.size() !=3 && hint_1.size() !=3 && hint_2.size() !=3 && hint_3.size() !=3 && hint_4.size() !=3 && hint_3.size() !=3) {
+			std::cout << '\n'<< '\n';
+			std::cout << "No complete hypotheses to check" << std::endl;
+			std::cout << '\n'<< '\n';
 		}
 	}
 
@@ -314,17 +321,23 @@ namespace KCL_rosplan {
 		}
 		
 		//Printing the hypothesis in natural language
-		std::cout << "My hypothesis: It was " << who << " with a " << what << " in the " << where << std::endl;		
+		std::cout << '\n'<< '\n';
+		std::cout << "My hypothesis: It was " << who << " with a " << what << " in the " << where << std::endl;
+		std::cout << '\n'<< '\n';	
 		
 		//Winning hypothesis case
 		if (win_ID == ID){
+			std::cout << '\n'<< '\n';
 			std::cout << "Correct hypothesis" << std::endl;
 			std::cout << "I won!!!" << std::endl;
+			std::cout << '\n'<< '\n';
 			winning = true;
 		}
 		//Not winning hypothesis case
 		else{
+			std::cout << '\n'<< '\n';
 			std::cout << "Not winning hypothesis, searching for another one" << std::endl;
+			std::cout << '\n'<< '\n';
 			winning = false;
 		}
 	
